@@ -10,12 +10,12 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/react": "^17.0.0",
-    "@types/react-native": "^0.63.45",
+    "@types/react": "16.9.23",
+    "@types/react-native": "^0.63.2",
     "metro-react-native-babel-preset": "^0.64.0",
     "prettier": "^2.2.1",
-    "react": "^17.0.1",
-    "react-native": "^0.63.4",
+    "react": "16.13.1",
+    "react-native": "0.63.2",
     "tslint": "^6.1.3",
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^4.1.3"

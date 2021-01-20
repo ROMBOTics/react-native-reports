@@ -1,5 +1,5 @@
 import { ViewStyle } from "react-native"
-import { ReportTypes, Range, Report } from "../../../../../store/types"
+import { ReportTypes, Range, Report } from "./report-card.types"
 
 export interface ReportCardProps {
   /**
@@ -26,6 +26,16 @@ export interface ReportCardProps {
    * report object
    */
   report?: Report
+
+  /**
+   * is in develop mode
+   */
+  isDev: boolean
+
+  /**
+   * is in dark mode
+   */
+  isDarkMode: boolean
 
   /**
    * Container style overrides.

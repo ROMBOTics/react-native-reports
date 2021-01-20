@@ -27,3 +27,9 @@ export const Ranges = {
     to: moment().toDate(),
   } as Range,
 }
+
+export interface Report {
+  isFetching: boolean
+  reportType: ReportTypes
+  data?: any
+}
