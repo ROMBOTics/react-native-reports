@@ -1,6 +1,56 @@
-import React, { useState, useMemo, useContext } from "react"
-import { StyleSheet, View, Text } from "react-native"
+import React, { useContext } from "react"
+import { StyleSheet, View, Text} from "react-native"
 import { ButtonGroup } from "react-native-elements"
+
+import { StateContext } from '../../context/reports-context'
+
+import { ReportsProps } from './reports.props'
+
+import { ReportCard } from "../report-card/report-card"
+import { Ranges, RangeTypes, ReportTypes } from '../report-card/report-card.types'
+
+export function Reports(props: ReportsProps) {
+
+  const state = useContext(StateContext)
+
+
+  const updateIndex = (range: RangeTypes) => {
+    state.setState({
+      range
+    })
+  }
+
+  const container = {
+    flexDirection: 'row'
+  }
+  const  title = {
+    fontSize: 19,
+    color: 'gray'
+  }
+  const highlight = {
+    fontSize: 19,
+    color: 'black'
+  }
+
+  const selectedRange = Ranges[state.state.range]
+
+  return (
+    <View style={container}>
+      <Text style={[title, state.state.range === RangeTypes.month && highlight]} onPress={() => updateIndex(RangeTypes.month)}>{"month"}</Text>
+      <Text style={[title, state.state.range === RangeTypes.week && highlight]} onPress={() => updateIndex(RangeTypes.week)}>{"week"}</Text>
+      <ReportCard
+        {...props}
+        title="Pain Percentage"
+        type={ReportTypes.painPercentage}
+        range={selectedRange}
+        report={state.state.reports[ReportTypes.painPercentage]}
+      />
+    </View>
+  )
+}
+
+/*import React, { useState, useMemo, useContext } from "react"
+import { StyleSheet, View, Text } from "react-native"
 
 import { ReportsProps } from './reports.props'
 import { ReportTypes, Ranges } from '../report-card/report-card.types'
@@ -34,16 +84,9 @@ export function Reports(props: ReportsProps) {
 
 
   return (
-    <View testID="reports" style={styles.container}>
+    <View style={styles.container}>
 
-      <ButtonGroup
-        onPress={updateIndex}
-        selectedIndex={rangeState.range}
-        buttons={rangeButtons}
-        textStyle={styles.rangeButtonText}
-        containerStyle={{}}
-      />
-      {/*<ReportCard
+      <ReportCard
         {...props}
         title="Pain Percentage"
         type={ReportTypes.painPercentage}
@@ -70,7 +113,7 @@ export function Reports(props: ReportsProps) {
         type={ReportTypes.programCompletionPercentage}
         range={selectedRange}
         report={reports[ReportTypes.programCompletionPercentage]}
-      />*/}
+      />
     </View>
   )
-}
+}*/

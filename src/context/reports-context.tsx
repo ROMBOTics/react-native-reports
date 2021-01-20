@@ -1,12 +1,48 @@
 import React, { useState } from "react"
+import {RangeTypes} from '../components/report-card/report-card.types'
 
-const initialReports = {
-
+interface state {
+  range?: RangeTypes,
+  reports?: object
 }
 
-export const ReportsContext = React.createContext(initialReports)
+const initialState = {
+  range: RangeTypes.month,
+  reports: {}
+}
 
-export const RangeContext = React.createContext({
+export const StateContext = React.createContext({
+  state: initialState,
+  setState: (state: state) => {}
+})
+
+
+interface StateContextProviderProps {
+  children: React.ReactNode,
+}
+
+
+export const StateContextProvider = (props: StateContextProviderProps) => {
+  const setState = (state: state) => {
+    setPackageState({ ...packageState, state: {
+      ...packageState.state,
+      ...state
+    } })
+  }
+
+  const [packageState, setPackageState] = useState({
+    state: initialState,
+    setState: setState
+  })
+
+  return (
+    <StateContext.Provider value={packageState}>
+      {props.children}
+    </StateContext.Provider>
+  )
+}
+
+/*export const RangeContext = React.createContext({
   range: 0,
   setRange: (any) => {}
 })
@@ -28,4 +64,4 @@ export const RangeContextProvider = (props) => {
       {props.children}
     </RangeContext.Provider>
   )
-}
+}*/

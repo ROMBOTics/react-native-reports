@@ -9,14 +9,14 @@ import { useDispatch } from 'react-redux'
 
 import { spacing, metrics } from "../../theme"
 
-const styles = StyleSheet.create({
+/*const styles = StyleSheet.create({
   container: {
   },
   title: {
     margin: spacing.medium,
     textAlign: 'center'
   },
-})
+})*/
 
 /**
  * List item show patient information
@@ -26,7 +26,10 @@ export function ReportCard(props: ReportCardProps) {
   const { patientId, title, range, type, report, style: styleOverride } = props
   const { data, isFetching } = report || {}
 
-  const containerStyle = {...styles.container, ...styleOverride} as ViewStyle
+  const container= {
+  }
+
+  const containerStyle = {...container, ...styleOverride} as ViewStyle
 
   /*useEffect(() => {
     dispatch(getReport(patientId, type, range, false, metrics.deviceWidth))
@@ -35,9 +38,26 @@ export function ReportCard(props: ReportCardProps) {
   const formatedSvg = (data || "")
     .replaceAll("sans-serif", "")
 
+  
+  const titleS = {
+      margin: spacing.medium,
+      textAlign: 'center'
+    }
+
   // console.log({ [title]: formatedSvg })
 
   return (
+    <View style={containerStyle}>
+      <Text style={titleS}>{title}</Text>
+      {isFetching ? (
+        <ActivityIndicator/>
+      ) : (
+        formatedSvg ? <SvgCss xml={formatedSvg} width="100%" height="300" /> : null
+      )}
+    </View>
+  )
+
+  /*return (
     <View style={containerStyle}>
       <Text style={styles.title}>{title}</Text>
       {isFetching ? (
@@ -46,5 +66,5 @@ export function ReportCard(props: ReportCardProps) {
         formatedSvg ? <SvgCss xml={formatedSvg} width="100%" height="300" /> : null
       )}
     </View>
-  )
+  )*/
 }
