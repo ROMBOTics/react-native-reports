@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useContext } from "react"
 import { Text, View, ViewStyle, ActivityIndicator, StyleSheet } from "react-native"
-import { ReportCardProps } from "./report-card.props"
 import { SvgCss } from 'react-native-svg'
 import axios from 'axios';
 
+import { StateContext } from '../../context/reports-context'
+import { ReportCardProps } from "./report-card.props"
+import { Ranges } from '../range-selector/range-selector.types'
 import { spacing, metrics } from "../../theme"
 
 const styles = StyleSheet.create({
@@ -19,36 +21,59 @@ const styles = StyleSheet.create({
  * report to show individual chart
  */
 export function ReportCard(props: ReportCardProps) {
-  const [isFetching, setIsFetching] = useState(false);
-
-  console.log({props})
-
-  const { patientId, title, range, type, report, isDev, width = metrics.deviceWidth, version = 'v1', authorizationToken, style: styleOverride } = props
+  const {
+    patientId, authorizationToken, isDev, version = 'v1',
+    type, range: rangeOverride, isDarkMode, width = metrics.deviceWidth,
+    title, style: styleOverride
+  } = props
   const containerStyle = {...styles.container, ...styleOverride} as ViewStyle
 
+  const [isFetching, setIsFetching] = useState(false);
+
+  const context = useContext(StateContext)
+  const range = rangeOverride || Ranges[context.state.range]
+
+  const updateReport = (data: string) => {
+    context.setState({
+      ...context.state,
+      reports: {
+        ...context.state.reports,
+        [type]: data
+      }
+    })
+  }
+
   useEffect(() => {
-    const config = {
+    // api config
+    const apiConfig = {
       baseURL: isDev ? "http://localhost:3000/local/api" : "https://svc.rombot.com/reports/api",
       headers: {
         'Accept': 'image/svg+xml',
         'Authorization': `jwt ${authorizationToken}`
       }
     };
+
+    //construct path
     let path = `${version}/${type}?for_identity=com.rombot.patient:${patientId}`
     if (range) {
       path = `${path}&from=${range.from.toISOString()}`
       path = `${path}&to=${range.to.toISOString()}`
     }
-    path = `${path}&dark=${false}`
+    path = `${path}&dark=${isDarkMode}`
     if (width) {
       path = `${path}&width=${width}`
     }
     path = `${path}&font_scale=${1.2}`
+
+    // set loading to true
     setIsFetching(true)
-    axios.get(path, config)
+
+    // call backend
+    axios.get(path, apiConfig)
       .then((response) => {
+        updateReport(response.data)
         // handle success
-        console.log(response.data);
+        console.log();
       })
       .catch((error) => {
         // handle error
@@ -58,11 +83,10 @@ export function ReportCard(props: ReportCardProps) {
         // always executed
         setIsFetching(false)
       });
-  }, [patientId, title, range, type, report, isDev, width, version ])
+  }, [patientId, title, range, type, isDev, isDarkMode, width, version ])
 
 
-  const data = ""
-
+  const data = context.state.reports[type]
   const formatedSvg = (data || "").replaceAll("sans-serif", "")
 
 

@@ -1,62 +1,106 @@
 
 
 import React, { useContext } from "react"
-import { StyleSheet, View, Text} from "react-native"
+import { StyleSheet, View, Text, TouchableOpacity} from "react-native"
+import { DynamicStyleSheet, useDynamicValue } from 'react-native-dynamic'
 
 import { StateContext } from '../../context/reports-context'
 
 import { RangeButtonProps } from './range-selector.props'
-import { Range, Ranges, RangeTypes } from './range-selector.types'
+import { RangeTypes } from './range-selector.types'
+import { spacing, cornerRadius, color } from "../../theme"
 
-const styles = StyleSheet.create({
+const dynamicStyles = new DynamicStyleSheet({
+  outerContainer: {
+    alignItems: 'center',
+  },
   container: {
     flexDirection: 'row',
-    justifyContent: 'center',
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: color.labelTertiary,
+    borderRadius: cornerRadius.small
+  },
+  button: {
+    paddingHorizontal: spacing.medium,
+    paddingVertical: spacing.small,
+    backgroundColor: color.background,
+    borderRadius: cornerRadius.small
+  },
+  buttonLeft: {
+    borderTopRightRadius: 0,
+    borderBottomRightRadius: 0,
+  },
+  buttonRight: {
+    borderTopLeftRadius: 0,
+    borderBottomLeftRadius: 0,
+  },
+  buttonHighlighted: {
+    backgroundColor: color.backgroundColorSecondary
   },
   title: {
-    margin: 16,
-    fontSize: 19,
-    color: 'gray'
+    fontSize: 15,
+    color: color.labelSecondary
   },
-  highlight: {
-    fontSize: 19,
-    color: 'black'
+  titleHighlighted: {
+    color: color.label
   },
+  seperator: {
+    width: StyleSheet.hairlineWidth,
+    backgroundColor: color.labelTertiary
+  }
 })
 
 
 
 export function RangeButton(props: RangeButtonProps) {
-  const {onPress, range, selectedRange} = props
+  const styles = useDynamicValue(dynamicStyles)
+  const {onPress, range, selectedRange, isLeft, isRight} = props
   const isSelected = selectedRange === range
 
+  const containerStyle = {
+    ...styles.button,
+    ...(isLeft && styles.buttonLeft),
+    ...(isRight && styles.buttonRight),
+    ...(isSelected && styles.buttonHighlighted)
+  }
+
   return (
-    <Text style={[styles.title, isSelected && styles.highlight]} onPress={onPress}>{range}</Text>
+    <TouchableOpacity onPress={onPress}>
+      <View style={containerStyle}>
+        <Text style={[styles.title, isSelected && styles.titleHighlighted]} >{range}</Text>
+      </View>
+    </TouchableOpacity>
   )
 }
 
 export function RangeSelector() {
-
+  const styles = useDynamicValue(dynamicStyles)
   const context = useContext(StateContext)
 
   const updateIndex = (range: RangeTypes) => {
     context.setState({
+      ...context.state,
       range
     })
   }
 
   return (
-    <View style={styles.container}>
-      <RangeButton
-        range={RangeTypes.month}
-        selectedRange={context.state.range}
-        onPress={() => updateIndex(RangeTypes.month)}
-      />
-      <RangeButton
-        range={RangeTypes.week}
-        selectedRange={context.state.range}
-        onPress={() => updateIndex(RangeTypes.week)}
-      />
+    <View style={styles.outerContainer}>
+      <View style={styles.container}>
+        <RangeButton
+          range={RangeTypes.month}
+          selectedRange={context.state.range}
+          onPress={() => updateIndex(RangeTypes.month)}
+          isLeft={true}
+        />
+        <View style={styles.seperator}/>
+        <RangeButton
+          range={RangeTypes.week}
+          selectedRange={context.state.range}
+          onPress={() => updateIndex(RangeTypes.week)}
+          isRight={true}
+        />
+      </View>
     </View>
   )
 }

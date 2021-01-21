@@ -19,9 +19,9 @@ export interface ReportCardProps {
   type: ReportTypes
 
   /**
-   * Report card type
+   * Report range
    */
-  range: Range
+  range?: Range
 
   /**
    * report object
