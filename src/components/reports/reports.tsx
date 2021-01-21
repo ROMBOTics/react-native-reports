@@ -1,27 +1,24 @@
-import React from "react"
-import { StyleSheet, View} from "react-native"
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
 
-import { ReportsProps } from './reports.props'
+import { ReportsProps } from './reports.props';
 
-import { ReportCard } from "../report-card/report-card"
-import { ReportTypes } from '../report-card/report-card.types'
-import { RangeSelector } from '../range-selector/range-selector'
-
+import { ReportCard } from '../report-card/report-card';
+import { ReportTypes } from '../report-card/report-card.types';
+import { RangeSelector } from '../range-selector/range-selector';
 
 const styles = StyleSheet.create({
-  container: {
-  },
+  container: {},
   title: {
     fontSize: 15,
-    fontWeight: '500'
+    fontWeight: '500',
   },
-})
+});
 
 export function Reports(props: ReportsProps) {
-
   return (
     <View style={styles.container}>
-      <RangeSelector/>
+      <RangeSelector />
       <ReportCard
         {...props}
         title="Pain Percentage"
@@ -43,5 +40,5 @@ export function Reports(props: ReportsProps) {
         type={ReportTypes.programCompletionPercentage}
       />
     </View>
-  )
+  );
 }

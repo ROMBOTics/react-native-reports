@@ -1,46 +1,47 @@
-import React, { useState } from "react"
-import {RangeTypes} from '../components/range-selector/range-selector.types'
+import React, { useState } from 'react';
+import { RangeTypes } from '../components/range-selector/range-selector.types';
 
 interface state {
-  range?: RangeTypes,
-  reports?: object
+  range?: RangeTypes;
+  reports?: object;
 }
 
 const initialState = {
   range: RangeTypes.month,
-  reports: {}
-}
+  reports: {},
+};
 
 export const StateContext = React.createContext({
   state: initialState,
-  setState: (state: state) => {}
-})
-
+  setState: (state: state) => {},
+});
 
 interface StateContextProviderProps {
-  children: React.ReactNode,
+  children: React.ReactNode;
 }
-
 
 export const StateContextProvider = (props: StateContextProviderProps) => {
   const setState = (state: state) => {
-    setPackageState({ ...packageState, state: {
-      ...packageState.state,
-      ...state
-    } })
-  }
+    setPackageState({
+      ...packageState,
+      state: {
+        ...packageState.state,
+        ...state,
+      },
+    });
+  };
 
   const [packageState, setPackageState] = useState({
     state: initialState,
-    setState: setState
-  })
+    setState: setState,
+  });
 
   return (
     <StateContext.Provider value={packageState}>
       {props.children}
     </StateContext.Provider>
-  )
-}
+  );
+};
 
 /*export const RangeContext = React.createContext({
   range: 0,

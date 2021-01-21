@@ -45,4 +45,4 @@ export const spacing = {
   large: 24,
   extraLarge: 32,
   huge: 64,
-}
+};

@@ -1,2 +1,2 @@
-export * from "./reports/reports"
-export * from "./range-selector/range-selector"
+export * from './reports/reports';
+export * from './range-selector/range-selector';

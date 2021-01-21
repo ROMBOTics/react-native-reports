@@ -1,60 +1,60 @@
-import { ViewStyle } from "react-native"
-import { ReportTypes, Report } from "./report-card.types"
-import { Range } from '../range-selector/range-selector.types'
+import { ViewStyle } from 'react-native';
+import { ReportTypes, Report } from './report-card.types';
+import { Range } from '../range-selector/range-selector.types';
 
 export interface ReportCardProps {
   /**
    * Patient id for fetching report
    */
-  patientId: number
+  patientId: number;
 
   /**
    * Report card title
    */
-  title: string
+  title: string;
 
   /**
    * Report card type
    */
-  type: ReportTypes
+  type: ReportTypes;
 
   /**
    * Report range
    */
-  range?: Range
+  range?: Range;
 
   /**
    * report object
    */
-  report?: Report
+  report?: Report;
 
   /**
-   * environment id 
+   * environment id
    */
-  envId: string
+  envId: string;
 
   /**
    * is in dark mode
    */
-  isDarkMode: boolean
+  isDarkMode: boolean;
 
   /**
    * api version
    */
-  version: string
+  version: string;
 
   /**
    * Authorization Token for fetching report
    */
-  authorizationToken: string
+  authorizationToken: string;
 
   /**
    * width for the chart
    */
-  width: number
+  width: number;
 
   /**
    * Container style overrides.
    */
-  style?: ViewStyle
+  style?: ViewStyle;
 }

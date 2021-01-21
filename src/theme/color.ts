@@ -1,5 +1,5 @@
-import { DynamicValue } from 'react-native-dynamic'
-import { palette } from "./palette"
+import { DynamicValue } from 'react-native-dynamic';
+import { palette } from './palette';
 
 /**
  * Roles for colors.  Prefer using these over the palette.  It makes it easier
@@ -28,7 +28,7 @@ export const color = {
   branding: new DynamicValue('#00cccc', '#00cccc'),
   red: new DynamicValue('#ff3b30ff', '#ff453aff'),
 
-  transparent: "rgba(0, 0, 0, 0)",
+  transparent: 'rgba(0, 0, 0, 0)',
 
   /**
    * The palette is available to use, but prefer using the name.
@@ -75,4 +75,4 @@ export const color = {
    * white background
    */
   storybookTextColor: palette.black,
-}
+};

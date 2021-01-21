@@ -5,4 +5,4 @@ export const cornerRadius = {
   large: 24,
   extraLarge: 32,
   huge: 64,
-}
+};

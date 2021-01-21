@@ -1,13 +1,13 @@
-import moment from 'moment'
+import moment from 'moment';
 
 export enum RangeTypes {
   month = 'month',
-  week = 'week'
+  week = 'week',
 }
 
 export interface Range {
-  from: Date,
-  to: Date
+  from: Date;
+  to: Date;
 }
 
 export const Ranges = {
@@ -19,4 +19,4 @@ export const Ranges = {
     from: moment().subtract(1, 'week').toDate(),
     to: moment().toDate(),
   } as Range,
-}
+};
