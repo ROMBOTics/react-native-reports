@@ -4,7 +4,7 @@ import { DynamicStyleSheet, useDynamicValue } from 'react-native-dynamic';
 
 import { StateContext } from '../../context/reports-context';
 
-import { RangeButtonProps } from './range-selector.props';
+import type { RangeButtonProps } from './range-selector.props';
 import { RangeTypes } from './range-selector.types';
 import { spacing, cornerRadius, color } from '../../theme';
 

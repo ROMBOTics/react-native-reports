@@ -10,7 +10,7 @@ import { SvgCss } from 'react-native-svg';
 import axios from 'axios';
 
 import { StateContext } from '../../context/reports-context';
-import { ReportCardProps } from './report-card.props';
+import type { ReportCardProps } from './report-card.props';
 import { Ranges } from '../range-selector/range-selector.types';
 import { spacing, metrics } from '../../theme';
 import { reportsUrls } from '../../network';

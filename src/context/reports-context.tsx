@@ -13,7 +13,7 @@ const initialState = {
 
 export const StateContext = React.createContext({
   state: initialState,
-  setState: (state: state) => {},
+  setState: (_state: state) => {},
 });
 
 interface StateContextProviderProps {

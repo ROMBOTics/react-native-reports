@@ -1,4 +1,4 @@
-import { RangeTypes } from './range-selector.types';
+import type { RangeTypes } from './range-selector.types';
 
 export interface RangeButtonProps {
   range: RangeTypes;

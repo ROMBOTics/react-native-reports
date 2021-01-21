@@ -1,6 +1,6 @@
-import { ViewStyle } from 'react-native';
-import { ReportTypes, Report } from './report-card.types';
-import { Range } from '../range-selector/range-selector.types';
+import type { ViewStyle } from 'react-native';
+import type { ReportTypes, Report } from './report-card.types';
+import type { Range } from '../range-selector/range-selector.types';
 
 export interface ReportCardProps {
   /**

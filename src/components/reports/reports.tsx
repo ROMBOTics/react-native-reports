@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { ReportsProps } from './reports.props';
+import type { ReportsProps } from './reports.props';
 
 import { ReportCard } from '../report-card/report-card';
 import { ReportTypes } from '../report-card/report-card.types';
