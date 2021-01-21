@@ -7,6 +7,11 @@ export interface ReportsProps {
   patientId: number
 
   /**
+   * Authorization Token for fetching report
+   */
+  authorizationToken: string
+
+  /**
    * is in develop mode
    */
   isDev: boolean
@@ -20,4 +25,14 @@ export interface ReportsProps {
    * Container style overrides.
    */
   style?: ViewStyle
+
+  /**
+   * api version
+   */
+  version: string
+
+  /**
+   * width for the chart
+   */
+  width: number
 }

@@ -1,63 +1,74 @@
-import React, { useEffect } from "react"
+import React, { useState, useEffect } from "react"
 import { Text, View, ViewStyle, ActivityIndicator, StyleSheet } from "react-native"
 import { ReportCardProps } from "./report-card.props"
 import { SvgCss } from 'react-native-svg'
-
-import { useDispatch } from 'react-redux'
-
-//import { getReport } from '../../../../../store/report'
+import axios from 'axios';
 
 import { spacing, metrics } from "../../theme"
 
-/*const styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
   },
   title: {
     margin: spacing.medium,
     textAlign: 'center'
   },
-})*/
+})
 
 /**
- * List item show patient information
+ * report to show individual chart
  */
 export function ReportCard(props: ReportCardProps) {
-  const dispatch = useDispatch()
-  const { patientId, title, range, type, report, style: styleOverride } = props
-  const { data, isFetching } = report || {}
+  const [isFetching, setIsFetching] = useState(false);
 
-  const container= {
-  }
+  console.log({props})
 
-  const containerStyle = {...container, ...styleOverride} as ViewStyle
+  const { patientId, title, range, type, report, isDev, width = metrics.deviceWidth, version = 'v1', authorizationToken, style: styleOverride } = props
+  const containerStyle = {...styles.container, ...styleOverride} as ViewStyle
 
-  /*useEffect(() => {
-    dispatch(getReport(patientId, type, range, false, metrics.deviceWidth))
-  }, [dispatch, patientId, title, range, type])*/
-
-  const formatedSvg = (data || "")
-    .replaceAll("sans-serif", "")
-
-  
-  const titleS = {
-      margin: spacing.medium,
-      textAlign: 'center'
+  useEffect(() => {
+    const config = {
+      baseURL: isDev ? "http://localhost:3000/local/api" : "https://svc.rombot.com/reports/api",
+      headers: {
+        'Accept': 'image/svg+xml',
+        'Authorization': `jwt ${authorizationToken}`
+      }
+    };
+    let path = `${version}/${type}?for_identity=com.rombot.patient:${patientId}`
+    if (range) {
+      path = `${path}&from=${range.from.toISOString()}`
+      path = `${path}&to=${range.to.toISOString()}`
     }
+    path = `${path}&dark=${false}`
+    if (width) {
+      path = `${path}&width=${width}`
+    }
+    path = `${path}&font_scale=${1.2}`
+    setIsFetching(true)
+    axios.get(path, config)
+      .then((response) => {
+        // handle success
+        console.log(response.data);
+      })
+      .catch((error) => {
+        // handle error
+        console.log(error);
+      })
+      .then(() => {
+        // always executed
+        setIsFetching(false)
+      });
+  }, [patientId, title, range, type, report, isDev, width, version ])
 
-  // console.log({ [title]: formatedSvg })
+
+  const data = ""
+
+  const formatedSvg = (data || "").replaceAll("sans-serif", "")
+
+
+  console.log({ [title]: formatedSvg })
 
   return (
-    <View style={containerStyle}>
-      <Text style={titleS}>{title}</Text>
-      {isFetching ? (
-        <ActivityIndicator/>
-      ) : (
-        formatedSvg ? <SvgCss xml={formatedSvg} width="100%" height="300" /> : null
-      )}
-    </View>
-  )
-
-  /*return (
     <View style={containerStyle}>
       <Text style={styles.title}>{title}</Text>
       {isFetching ? (
@@ -66,5 +77,5 @@ export function ReportCard(props: ReportCardProps) {
         formatedSvg ? <SvgCss xml={formatedSvg} width="100%" height="300" /> : null
       )}
     </View>
-  )*/
+  )
 }

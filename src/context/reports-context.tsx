@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import {RangeTypes} from '../components/report-card/report-card.types'
+import {RangeTypes} from '../components/range-selector/range-selector.types'
 
 interface state {
   range?: RangeTypes,

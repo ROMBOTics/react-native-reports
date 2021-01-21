@@ -1,15 +1,53 @@
 import React, { useContext } from "react"
 import { StyleSheet, View, Text} from "react-native"
-import { ButtonGroup } from "react-native-elements"
 
 import { StateContext } from '../../context/reports-context'
 
 import { ReportsProps } from './reports.props'
 
 import { ReportCard } from "../report-card/report-card"
-import { Ranges, RangeTypes, ReportTypes } from '../report-card/report-card.types'
+import { ReportTypes } from '../report-card/report-card.types'
+import { RangeSelector } from '../range-selector/range-selector'
+import { Ranges, RangeTypes } from '../range-selector/range-selector.types'
+
+
+const styles = StyleSheet.create({
+  container: {
+  },
+  title: {
+    fontSize: 15,
+    fontWeight: '500'
+  },
+})
 
 export function Reports(props: ReportsProps) {
+
+  const context = useContext(StateContext)
+
+
+  const updateIndex = (range: RangeTypes) => {
+    context.setState({
+      range
+    })
+  }
+
+  const selectedRange = Ranges[context.state.range]
+
+  return (
+    <View style={styles.container}>
+      <RangeSelector/>
+      <ReportCard
+        {...props}
+        title="Pain Percentage"
+        type={ReportTypes.painPercentage}
+        range={selectedRange}
+        report={context.state.reports[ReportTypes.painPercentage]}
+      />
+    </View>
+  )
+}
+
+/*export function Reports(props: ReportsProps) {
 
   const state = useContext(StateContext)
 
@@ -20,34 +58,14 @@ export function Reports(props: ReportsProps) {
     })
   }
 
-  const container = {
-    flexDirection: 'row'
-  }
-  const  title = {
-    fontSize: 19,
-    color: 'gray'
-  }
-  const highlight = {
-    fontSize: 19,
-    color: 'black'
-  }
-
   const selectedRange = Ranges[state.state.range]
 
   return (
-    <View style={container}>
-      <Text style={[title, state.state.range === RangeTypes.month && highlight]} onPress={() => updateIndex(RangeTypes.month)}>{"month"}</Text>
-      <Text style={[title, state.state.range === RangeTypes.week && highlight]} onPress={() => updateIndex(RangeTypes.week)}>{"week"}</Text>
-      <ReportCard
-        {...props}
-        title="Pain Percentage"
-        type={ReportTypes.painPercentage}
-        range={selectedRange}
-        report={state.state.reports[ReportTypes.painPercentage]}
-      />
+    <View style={styles.container}>
+      
     </View>
   )
-}
+}*/
 
 /*import React, { useState, useMemo, useContext } from "react"
 import { StyleSheet, View, Text } from "react-native"
