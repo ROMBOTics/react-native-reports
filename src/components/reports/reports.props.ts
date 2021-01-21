@@ -12,9 +12,9 @@ export interface ReportsProps {
   authorizationToken: string
 
   /**
-   * is in develop mode
+   * environment id 
    */
-  isDev: boolean
+  envId: string
 
   /**
    * is in dark mode

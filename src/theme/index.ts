@@ -1,6 +1,4 @@
 export * from "./color"
 export * from "./spacing"
 export * from "./cornerRadius"
-export * from "./typography"
-export * from "./timing"
 export * from "./metrics"

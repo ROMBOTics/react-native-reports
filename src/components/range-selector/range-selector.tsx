@@ -23,7 +23,7 @@ const dynamicStyles = new DynamicStyleSheet({
   button: {
     paddingHorizontal: spacing.medium,
     paddingVertical: spacing.small,
-    backgroundColor: color.background,
+    backgroundColor: color.backgroundColor,
     borderRadius: cornerRadius.small
   },
   buttonLeft: {

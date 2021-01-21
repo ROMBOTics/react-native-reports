@@ -7,6 +7,7 @@ import { StateContext } from '../../context/reports-context'
 import { ReportCardProps } from "./report-card.props"
 import { Ranges } from '../range-selector/range-selector.types'
 import { spacing, metrics } from "../../theme"
+import { reportsUrls } from "../../network"
 
 const styles = StyleSheet.create({
   container: {
@@ -22,18 +23,20 @@ const styles = StyleSheet.create({
  */
 export function ReportCard(props: ReportCardProps) {
   const {
-    patientId, authorizationToken, isDev, version = 'v1',
+    patientId, authorizationToken, envId, version = 'v1',
     type, range: rangeOverride, isDarkMode, width = metrics.deviceWidth,
     title, style: styleOverride
   } = props
   const containerStyle = {...styles.container, ...styleOverride} as ViewStyle
 
   const [isFetching, setIsFetching] = useState(false);
+  const [data, setData] = useState("");
 
   const context = useContext(StateContext)
   const range = rangeOverride || Ranges[context.state.range]
 
-  const updateReport = (data: string) => {
+  // update state through context, race condition to be solved. for now use local state
+  /*const updateReport = (data: string) => {
     context.setState({
       ...context.state,
       reports: {
@@ -41,12 +44,12 @@ export function ReportCard(props: ReportCardProps) {
         [type]: data
       }
     })
-  }
+  }*/
 
   useEffect(() => {
     // api config
     const apiConfig = {
-      baseURL: isDev ? "http://localhost:3000/local/api" : "https://svc.rombot.com/reports/api",
+      baseURL: reportsUrls[envId],
       headers: {
         'Accept': 'image/svg+xml',
         'Authorization': `jwt ${authorizationToken}`
@@ -71,26 +74,23 @@ export function ReportCard(props: ReportCardProps) {
     // call backend
     axios.get(path, apiConfig)
       .then((response) => {
-        updateReport(response.data)
         // handle success
-        console.log();
+        setData(response.data)
+        // updateReport(response.data)
       })
       .catch((error) => {
-        // handle error
+        // handle error todo: add handle error prop
         console.log(error);
       })
       .then(() => {
         // always executed
         setIsFetching(false)
       });
-  }, [patientId, title, range, type, isDev, isDarkMode, width, version ])
+  }, [patientId, title, range, type, envId, isDarkMode, width, version ])
 
 
-  const data = context.state.reports[type]
+  //const data = context.state.reports[type]
   const formatedSvg = (data || "").replaceAll("sans-serif", "")
-
-
-  console.log({ [title]: formatedSvg })
 
   return (
     <View style={containerStyle}>
