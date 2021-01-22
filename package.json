@@ -1,16 +1,23 @@
 {
   "name": "react-native-reports",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "A react native component package for rendering reports",
   "main": "lib/commonjs/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "bob build",
     "lint": "tsc --noEmit && eslint --ext .js,.ts,.tsx .",
-    "prettier:write": "npx prettier --write **/*.{js,ts,tsx,json} && npx prettier --write *.json"
+    "format": "npx prettier --write **/*.{js,ts,tsx,json} && npx prettier --write *.json",
+    "prepublishOnly": "npx prettier --check . && yarn lint",
+    "preversion": "yarn lint",
+    "version": "yarn format && git add -A src",
+    "postversion": "git push origin HEAD:master && git push --tags"
   },
-  "author": "",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ROMBOTics/react-native-reports.git"
+  },
+  "author": "Ethan Wang",
+  "license": "UNLICENSED",
   "devDependencies": {
     "@react-native-community/eslint-config": "^2.0.0",
     "@types/react": "16.9.23",

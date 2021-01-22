@@ -87,14 +87,16 @@ export function RangeSelector() {
       <View style={styles.container}>
         <RangeButton
           range={RangeTypes.month}
-          selectedRange={context.state.range}
+          // eslint-disable-next-line react/destructuring-assignment
+          selectedRange={context.state?.range}
           onPress={() => updateIndex(RangeTypes.month)}
           isLeft
         />
         <View style={styles.seperator} />
         <RangeButton
           range={RangeTypes.week}
-          selectedRange={context.state.range}
+          // eslint-disable-next-line react/destructuring-assignment
+          selectedRange={context.state?.range}
           onPress={() => updateIndex(RangeTypes.week)}
           isRight
         />

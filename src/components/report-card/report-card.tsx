@@ -46,7 +46,8 @@ export function ReportCard(props: ReportCardProps) {
   const [data, setData] = useState('');
 
   const context = useContext(StateContext);
-  const range = rangeOverride || Ranges[context.state.range];
+  // eslint-disable-next-line react/destructuring-assignment
+  const range = rangeOverride || Ranges[context.state?.range];
 
   // update state through context, race condition to be solved. for now use local state
   /* const updateReport = (data: string) => {

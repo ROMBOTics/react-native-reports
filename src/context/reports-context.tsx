@@ -37,7 +37,10 @@ export const StateContextProvider = (props: StateContextProviderProps) => {
 
   return (
     <StateContext.Provider value={packageState}>
-      {props.children}
+      {
+        // eslint-disable-next-line react/destructuring-assignment
+        props.children
+      }
     </StateContext.Provider>
   );
 };
