@@ -1,5 +1,5 @@
 {
-  "name": "react-native-reports",
+  "name": "@rombotics/react-native-reports",
   "version": "1.0.1",
   "description": "A react native component package for rendering reports",
   "main": "lib/commonjs/index.js",
