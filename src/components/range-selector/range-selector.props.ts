@@ -1,9 +1,9 @@
-import { RangeTypes } from './range-selector.types'
+import type { RangeTypes } from './range-selector.types';
 
 export interface RangeButtonProps {
-  range: RangeTypes,
-  selectedRange: RangeTypes
-  onPress: () => void,
-  isLeft?: boolean,
-  isRight?: boolean
+  range: RangeTypes;
+  selectedRange: RangeTypes;
+  onPress: () => void;
+  isLeft?: boolean;
+  isRight?: boolean;
 }

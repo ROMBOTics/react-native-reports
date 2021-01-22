@@ -38,6 +38,7 @@
  * 7 = huge    - ?
  * 8 = massive - an uncomfortable amount of whitespace
  */
+// eslint-disable-next-line import/prefer-default-export
 export const spacing = {
   tiny: 4,
   small: 8,
@@ -45,4 +46,4 @@ export const spacing = {
   large: 24,
   extraLarge: 32,
   huge: 64,
-}
+};

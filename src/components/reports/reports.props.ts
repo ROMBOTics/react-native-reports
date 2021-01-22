@@ -1,38 +1,38 @@
-import { ViewStyle } from "react-native"
+import type { ViewStyle } from 'react-native';
 
 export interface ReportsProps {
   /**
    * Patient id for fetching report
    */
-  patientId: number
+  patientId: number;
 
   /**
    * Authorization Token for fetching report
    */
-  authorizationToken: string
+  authorizationToken: string;
 
   /**
-   * environment id 
+   * environment id
    */
-  envId: string
+  envId: string;
 
   /**
    * is in dark mode
    */
-  isDarkMode: boolean
+  isDarkMode: boolean;
 
   /**
    * Container style overrides.
    */
-  style?: ViewStyle
+  style?: ViewStyle;
 
   /**
    * api version
    */
-  version: string
+  version: string;
 
   /**
    * width for the chart
    */
-  width: number
+  width: number;
 }

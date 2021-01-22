@@ -1,48 +1,51 @@
-import React, { useState } from "react"
-import {RangeTypes} from '../components/range-selector/range-selector.types'
+import React, { useState } from 'react';
+import { RangeTypes } from '../components/range-selector/range-selector.types';
 
-interface state {
-  range?: RangeTypes,
-  reports?: object
+interface State {
+  range?: RangeTypes;
+  reports?: object;
 }
 
 const initialState = {
   range: RangeTypes.month,
-  reports: {}
-}
+  reports: {},
+};
 
 export const StateContext = React.createContext({
   state: initialState,
-  setState: (state: state) => {}
-})
-
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  setState: (_state: State) => {},
+});
 
 interface StateContextProviderProps {
-  children: React.ReactNode,
+  children: React.ReactNode;
 }
 
-
 export const StateContextProvider = (props: StateContextProviderProps) => {
-  const setState = (state: state) => {
-    setPackageState({ ...packageState, state: {
-      ...packageState.state,
-      ...state
-    } })
-  }
-
   const [packageState, setPackageState] = useState({
     state: initialState,
-    setState: setState
-  })
+    setState: (state: State) => {
+      setPackageState({
+        ...packageState,
+        state: {
+          ...packageState.state,
+          ...state,
+        },
+      });
+    },
+  });
 
   return (
     <StateContext.Provider value={packageState}>
-      {props.children}
+      {
+        // eslint-disable-next-line react/destructuring-assignment
+        props.children
+      }
     </StateContext.Provider>
-  )
-}
+  );
+};
 
-/*export const RangeContext = React.createContext({
+/* export const RangeContext = React.createContext({
   range: 0,
   setRange: (any) => {}
 })
@@ -64,4 +67,4 @@ export const RangeContextProvider = (props) => {
       {props.children}
     </RangeContext.Provider>
   )
-}*/
+} */
