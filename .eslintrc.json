@@ -1,23 +1,30 @@
 {
+  "root": true,
   "env": {
     "browser": true,
     "es2021": true
   },
   "extends": [
-    "plugin:react/recommended",
-    "plugin:prettier/recommended",
-    "prettier/react",
-    "airbnb"
+    "@react-native-community",
+    "airbnb-typescript",
+    "prettier",
+    "prettier/@typescript-eslint",
+    "prettier/react"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
+    "project": "./tsconfig.json",
     "ecmaFeatures": {
       "jsx": true
     },
     "ecmaVersion": 12,
     "sourceType": "module"
   },
-  "plugins": ["react", "@typescript-eslint"],
-  "rules": {},
+  "plugins": ["@typescript-eslint"],
+  "rules": {
+    "no-use-before-define": "off",
+    "@typescript-eslint/no-use-before-define": ["error"],
+    "react/destructuring-assignment": "off"
+  },
   "ignorePatterns": ["node_modules", "externals"]
 }

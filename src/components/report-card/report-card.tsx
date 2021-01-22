@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
 /**
  * report to show individual chart
  */
+// eslint-disable-next-line import/prefer-default-export
 export function ReportCard(props: ReportCardProps) {
   const {
     patientId,
@@ -48,7 +49,7 @@ export function ReportCard(props: ReportCardProps) {
   const range = rangeOverride || Ranges[context.state.range];
 
   // update state through context, race condition to be solved. for now use local state
-  /*const updateReport = (data: string) => {
+  /* const updateReport = (data: string) => {
     context.setState({
       ...context.state,
       reports: {
@@ -56,7 +57,7 @@ export function ReportCard(props: ReportCardProps) {
         [type]: data
       }
     })
-  }*/
+  } */
 
   useEffect(() => {
     // api config
@@ -68,7 +69,7 @@ export function ReportCard(props: ReportCardProps) {
       },
     };
 
-    //construct path
+    // construct path
     let path = `${version}/${type}?for_identity=com.rombot.patient:${patientId}`;
     if (range) {
       path = `${path}&from=${range.from.toISOString()}`;
@@ -93,25 +94,39 @@ export function ReportCard(props: ReportCardProps) {
       })
       .catch((error) => {
         // handle error todo: add handle error prop
+        // eslint-disable-next-line no-console
         console.log(error);
       })
       .then(() => {
         // always executed
         setIsFetching(false);
       });
-  }, [patientId, title, range, type, envId, isDarkMode, width, version]);
+  }, [
+    patientId,
+    title,
+    range,
+    type,
+    envId,
+    isDarkMode,
+    width,
+    version,
+    authorizationToken,
+  ]);
 
-  //const data = context.state.reports[type]
+  // const data = context.state.reports[type]
   const formatedSvg = (data || '').replaceAll('sans-serif', '');
 
   return (
     <View style={containerStyle}>
       <Text style={styles.title}>{title}</Text>
-      {isFetching ? (
-        <ActivityIndicator />
-      ) : formatedSvg ? (
-        <SvgCss xml={formatedSvg} width="100%" height="300" />
-      ) : null}
+      {
+        // eslint-disable-next-line no-nested-ternary
+        isFetching ? (
+          <ActivityIndicator />
+        ) : formatedSvg ? (
+          <SvgCss xml={formatedSvg} width="100%" height="300" />
+        ) : null
+      }
     </View>
   );
 }

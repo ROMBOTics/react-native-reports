@@ -15,26 +15,31 @@ const styles = StyleSheet.create({
   },
 });
 
+// eslint-disable-next-line import/prefer-default-export
 export function Reports(props: ReportsProps) {
   return (
     <View style={styles.container}>
       <RangeSelector />
       <ReportCard
+        // eslint-disable-next-line react/jsx-props-no-spreading
         {...props}
         title="Pain Percentage"
         type={ReportTypes.painPercentage}
       />
       <ReportCard
+        // eslint-disable-next-line react/jsx-props-no-spreading
         {...props}
         title="Skipped Exericses"
         type={ReportTypes.skippedTotal}
       />
       <ReportCard
+        // eslint-disable-next-line react/jsx-props-no-spreading
         {...props}
         title="Pain Average"
         type={ReportTypes.painAverage}
       />
       <ReportCard
+        // eslint-disable-next-line react/jsx-props-no-spreading
         {...props}
         title="Completion %"
         type={ReportTypes.programCompletionPercentage}

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { RangeTypes } from '../components/range-selector/range-selector.types';
 
-interface state {
+interface State {
   range?: RangeTypes;
   reports?: object;
 }
@@ -13,7 +13,8 @@ const initialState = {
 
 export const StateContext = React.createContext({
   state: initialState,
-  setState: (_state: state) => {},
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  setState: (_state: State) => {},
 });
 
 interface StateContextProviderProps {
@@ -21,19 +22,17 @@ interface StateContextProviderProps {
 }
 
 export const StateContextProvider = (props: StateContextProviderProps) => {
-  const setState = (state: state) => {
-    setPackageState({
-      ...packageState,
-      state: {
-        ...packageState.state,
-        ...state,
-      },
-    });
-  };
-
   const [packageState, setPackageState] = useState({
     state: initialState,
-    setState: setState,
+    setState: (state: State) => {
+      setPackageState({
+        ...packageState,
+        state: {
+          ...packageState.state,
+          ...state,
+        },
+      });
+    },
   });
 
   return (
@@ -43,7 +42,7 @@ export const StateContextProvider = (props: StateContextProviderProps) => {
   );
 };
 
-/*export const RangeContext = React.createContext({
+/* export const RangeContext = React.createContext({
   range: 0,
   setRange: (any) => {}
 })
@@ -65,4 +64,4 @@ export const RangeContextProvider = (props) => {
       {props.children}
     </RangeContext.Provider>
   )
-}*/
+} */

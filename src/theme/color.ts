@@ -10,6 +10,7 @@ import { palette } from './palette';
  * If you have a specific use-case, like a spinner color.  It makes more sense to
  * put that in the <Spinner /> component.
  */
+// eslint-disable-next-line import/prefer-default-export
 export const color = {
   backgroundColor: new DynamicValue('#FFFFFFFF', '#000000FF'),
   backgroundColorSecondary: new DynamicValue('#F2F2F7FF', '#1C1C1EFF'),

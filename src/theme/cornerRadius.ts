@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/prefer-default-export
 export const cornerRadius = {
   tiny: 4,
   small: 8,

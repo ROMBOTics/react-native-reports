@@ -89,14 +89,14 @@ export function RangeSelector() {
           range={RangeTypes.month}
           selectedRange={context.state.range}
           onPress={() => updateIndex(RangeTypes.month)}
-          isLeft={true}
+          isLeft
         />
         <View style={styles.seperator} />
         <RangeButton
           range={RangeTypes.week}
           selectedRange={context.state.range}
           onPress={() => updateIndex(RangeTypes.week)}
-          isRight={true}
+          isRight
         />
       </View>
     </View>

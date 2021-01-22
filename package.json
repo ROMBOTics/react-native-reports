@@ -4,20 +4,23 @@
   "description": "A react native component package for rendering reports",
   "main": "lib/commonjs/index.js",
   "scripts": {
-    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "bob build"
+    "prepare": "bob build",
+    "lint": "tsc --noEmit && eslint --ext .js,.ts,.tsx .",
+    "prettier:write": "npx prettier --write **/*.{js,ts,tsx,json}"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@react-native-community/eslint-config": "^2.0.0",
     "@types/react": "16.9.23",
     "@types/react-native": "^0.63.2",
-    "@typescript-eslint/eslint-plugin": "^4.14.0",
-    "@typescript-eslint/parser": "^4.14.0",
+    "@typescript-eslint/eslint-plugin": "^4.0.1",
+    "@typescript-eslint/parser": "^4.0.1",
     "axios": "^0.21.1",
     "eslint": "^7.18.0",
     "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-airbnb-typescript": "^12.0.0",
     "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jsx-a11y": "^6.4.1",
