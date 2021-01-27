@@ -115,7 +115,7 @@ export function ReportCard(props: ReportCardProps) {
   ]);
 
   // const data = context.state.reports[type]
-  const formatedSvg = (data || '').replaceAll('sans-serif', '');
+  const formatedSvg = (data || '').replace(/sans-serif/g, '');
 
   return (
     <View style={containerStyle}>
