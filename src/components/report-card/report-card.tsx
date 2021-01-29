@@ -7,18 +7,23 @@ import {
   StyleSheet,
 } from 'react-native';
 import { SvgCss } from 'react-native-svg';
+import { DynamicStyleSheet, useDynamicValue } from 'react-native-dynamic';
 import axios from 'axios';
 
 import { StateContext } from '../../context/reports-context';
 import type { ReportCardProps } from './report-card.props';
 import { Ranges } from '../range-selector/range-selector.types';
-import { spacing, metrics } from '../../theme';
+import { spacing, metrics, color } from '../../theme';
 import { reportsUrls } from '../../network';
 
-const styles = StyleSheet.create({
+const DEFAULT_SVG_HEIGHT = 100
+
+const dynamicStyles = new DynamicStyleSheet({
   container: {},
   title: {
     margin: spacing.medium,
+    fontSize: 15,
+    color: color.label,
     textAlign: 'center',
   },
 });
@@ -40,10 +45,12 @@ export function ReportCard(props: ReportCardProps) {
     title,
     style: styleOverride,
   } = props;
+  const styles = useDynamicValue(dynamicStyles);
   const containerStyle = { ...styles.container, ...styleOverride } as ViewStyle;
 
   const [isFetching, setIsFetching] = useState(false);
   const [data, setData] = useState('');
+  const [height, setHeight] = useState(DEFAULT_SVG_HEIGHT);
 
   const context = useContext(StateContext);
   // eslint-disable-next-line react/destructuring-assignment
@@ -90,7 +97,11 @@ export function ReportCard(props: ReportCardProps) {
       .get(path, apiConfig)
       .then((response) => {
         // handle success
-        setData(response.data);
+        const {svgString, meta} = response.data
+        const {style} = meta
+        const {height} = style
+        setData(svgString);
+        setHeight(height)
         // updateReport(response.data)
       })
       .catch((error) => {
@@ -115,7 +126,7 @@ export function ReportCard(props: ReportCardProps) {
   ]);
 
   // const data = context.state.reports[type]
-  const formatedSvg = (data || '').replace(/sans-serif/g, '');
+  const formatedSvg = (data || '').replace(/sans-serif/g,"");
 
   return (
     <View style={containerStyle}>
@@ -125,7 +136,7 @@ export function ReportCard(props: ReportCardProps) {
         isFetching ? (
           <ActivityIndicator />
         ) : formatedSvg ? (
-          <SvgCss xml={formatedSvg} width="100%" height="300" />
+          <SvgCss xml={formatedSvg} width="100%" height={height} />
         ) : null
       }
     </View>
