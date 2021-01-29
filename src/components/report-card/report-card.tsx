@@ -16,7 +16,9 @@ import { Ranges } from '../range-selector/range-selector.types';
 import { spacing, metrics, color } from '../../theme';
 import { reportsUrls } from '../../network';
 
-const DEFAULT_SVG_HEIGHT = 100
+const DEFAULT_SVG_HEIGHT = 100;
+
+const axiosInstance = axios.create();
 
 const dynamicStyles = new DynamicStyleSheet({
   container: {},
@@ -93,15 +95,15 @@ export function ReportCard(props: ReportCardProps) {
     setIsFetching(true);
 
     // call backend
-    axios
+    axiosInstance
       .get(path, apiConfig)
       .then((response) => {
         // handle success
-        const {svgString, meta} = response.data
-        const {style} = meta
-        const {height} = style
+        const { svgString, meta } = response.data;
+        const { style } = meta;
+        const { height } = style;
         setData(svgString);
-        setHeight(height)
+        setHeight(height);
         // updateReport(response.data)
       })
       .catch((error) => {
@@ -126,7 +128,7 @@ export function ReportCard(props: ReportCardProps) {
   ]);
 
   // const data = context.state.reports[type]
-  const formatedSvg = (data || '').replace(/sans-serif/g,"");
+  const formatedSvg = (data || '').replace(/sans-serif/g, '');
 
   return (
     <View style={containerStyle}>
