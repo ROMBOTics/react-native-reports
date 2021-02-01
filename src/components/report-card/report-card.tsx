@@ -101,9 +101,9 @@ export function ReportCard(props: ReportCardProps) {
         // handle success
         const { svgString, meta } = response.data;
         const { style } = meta;
-        const { height } = style;
+        const { height: chartHeight } = style;
         setData(svgString);
-        setHeight(height);
+        setHeight(chartHeight);
         // updateReport(response.data)
       })
       .catch((error) => {
