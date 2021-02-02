@@ -28,6 +28,22 @@ const dynamicStyles = new DynamicStyleSheet({
     color: color.label,
     textAlign: 'center',
   },
+  activityIndicatorContainer: {
+    padding: spacing.medium
+  },
+  svgOverlay: {
+    opacity: 0.4
+  },
+  emptyReportOverlayTextContainer: {
+    ...StyleSheet.absoluteFillObject,
+    justifyContent: 'center'
+  },
+  emptyReportOverlayText: {
+    fontSize: 15,
+    color: color.labelSecondary,
+    textAlign: 'center',
+    fontWeight: '600'
+  }
 });
 
 /**
@@ -44,7 +60,10 @@ export function ReportCard(props: ReportCardProps) {
     range: rangeOverride,
     isDarkMode,
     width = metrics.deviceWidth,
+    showTitle,
     title,
+    emptyReportOverlayText,
+    refresh,
     style: styleOverride,
   } = props;
   const styles = useDynamicValue(dynamicStyles);
@@ -53,6 +72,13 @@ export function ReportCard(props: ReportCardProps) {
   const [isFetching, setIsFetching] = useState(false);
   const [data, setData] = useState('');
   const [height, setHeight] = useState(DEFAULT_SVG_HEIGHT);
+  const [isEmpty, setIsEmpty] = useState(false);
+  const [shouldRefresh, setShouldRefresh] = useState(false);
+
+  useEffect(() => {
+    setShouldRefresh(refresh)
+  }, [refresh])
+  
 
   const context = useContext(StateContext);
   // eslint-disable-next-line react/destructuring-assignment
@@ -100,10 +126,13 @@ export function ReportCard(props: ReportCardProps) {
       .then((response) => {
         // handle success
         const { svgString, meta } = response.data;
-        const { style } = meta;
+        console.log({meta})
+        const { style, data } = meta;
         const { height: chartHeight } = style;
+        const {isEmpty: isDataEmpty} = data
         setData(svgString);
         setHeight(chartHeight);
+        setIsEmpty(isDataEmpty)
         // updateReport(response.data)
       })
       .catch((error) => {
@@ -114,6 +143,7 @@ export function ReportCard(props: ReportCardProps) {
       .then(() => {
         // always executed
         setIsFetching(false);
+        setShouldRefresh(false)
       });
   }, [
     patientId,
@@ -125,21 +155,41 @@ export function ReportCard(props: ReportCardProps) {
     width,
     version,
     authorizationToken,
+    shouldRefresh
   ]);
 
   // const data = context.state.reports[type]
   const formatedSvg = (data || '').replace(/sans-serif/g, '');
 
+  const renderGraph = () => {
+    if (!formatedSvg) {
+      return null
+    }
+
+    const showOverlay = isEmpty && emptyReportOverlayText
+
+    return (
+      <View>
+        <SvgCss style={showOverlay && styles.svgOverlay} xml={formatedSvg} width="100%" height={height} />
+        {showOverlay && (
+          <View style={styles.emptyReportOverlayTextContainer}>
+            <Text style={styles.emptyReportOverlayText}>{emptyReportOverlayText}</Text>
+          </View>
+        )}
+      </View>
+    )
+  }
+
   return (
     <View style={containerStyle}>
-      <Text style={styles.title}>{title}</Text>
+      {showTitle && <Text style={styles.title}>{title}</Text>}
       {
         // eslint-disable-next-line no-nested-ternary
         isFetching ? (
-          <ActivityIndicator />
-        ) : formatedSvg ? (
-          <SvgCss xml={formatedSvg} width="100%" height={height} />
-        ) : null
+          <View style={styles.activityIndicatorContainer}>
+            <ActivityIndicator />
+          </View>
+        ) : renderGraph()
       }
     </View>
   );

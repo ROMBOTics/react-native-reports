@@ -54,6 +54,21 @@ export interface ReportCardProps {
   width: number;
 
   /**
+   * optional flag to show title
+   */
+  showTitle?: boolean;
+
+  /**
+   * optional text overlay when report has no data
+   */
+  emptyReportOverlayText?: string;
+
+  /**
+   * optional flag to refresh chart
+   */
+  refresh?: boolean;
+
+  /**
    * Container style overrides.
    */
   style?: ViewStyle;

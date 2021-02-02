@@ -5,6 +5,27 @@ export enum ReportTypes {
   programCompletionPercentage = 'patient/program/completion/percentage',
 }
 
+export const PainPercentageProps = {
+  title: "Pain Percentage",
+  type: ReportTypes.painPercentage
+}
+
+export const SkippedExericsesProps = {
+  title: "Skipped Exericses",
+  type: ReportTypes.skippedTotal
+}
+
+export const PainAverageProps = {
+  title: "Pain Average",
+  type: ReportTypes.painAverage
+}
+
+export const CompletionPercentageProps = {
+  title: "Completion %",
+  type: ReportTypes.programCompletionPercentage
+}
+
+
 export interface Report {
   isFetching: boolean;
   reportType: ReportTypes;

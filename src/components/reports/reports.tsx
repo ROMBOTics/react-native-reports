@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, ViewStyle } from 'react-native';
 
 import type { ReportsProps } from './reports.props';
 
@@ -22,33 +22,36 @@ const styles = StyleSheet.create({
 
 // eslint-disable-next-line import/prefer-default-export
 export function Reports(props: ReportsProps) {
+  const {containerStyle: styleOverride, ...cardProps } = props
+  cardProps.showTitle = true
+  const containerStyle = {...styles.container, ...styleOverride} as ViewStyle
   return (
-    <View style={styles.container}>
+    <View style={containerStyle}>
       <RangeSelector />
       <ReportCard
         // eslint-disable-next-line react/jsx-props-no-spreading
-        {...props}
+        {...cardProps}
         style={styles.report}
         title="Pain Percentage"
         type={ReportTypes.painPercentage}
       />
       <ReportCard
         // eslint-disable-next-line react/jsx-props-no-spreading
-        {...props}
+        {...cardProps}
         style={styles.report}
         title="Skipped Exericses"
         type={ReportTypes.skippedTotal}
       />
       <ReportCard
         // eslint-disable-next-line react/jsx-props-no-spreading
-        {...props}
+        {...cardProps}
         style={styles.report}
         title="Pain Average"
         type={ReportTypes.painAverage}
       />
       <ReportCard
         // eslint-disable-next-line react/jsx-props-no-spreading
-        {...props}
+        {...cardProps}
         style={styles.report}
         title="Completion %"
         type={ReportTypes.programCompletionPercentage}
