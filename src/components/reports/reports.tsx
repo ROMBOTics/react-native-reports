@@ -16,15 +16,15 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   report: {
-    marginTop: spacing.medium
-  }
+    marginTop: spacing.medium,
+  },
 });
 
 // eslint-disable-next-line import/prefer-default-export
 export function Reports(props: ReportsProps) {
-  const {containerStyle: styleOverride, ...cardProps } = props
-  cardProps.showTitle = true
-  const containerStyle = {...styles.container, ...styleOverride} as ViewStyle
+  const { containerStyle: styleOverride, ...cardProps } = props;
+  cardProps.showTitle = true;
+  const containerStyle = { ...styles.container, ...styleOverride } as ViewStyle;
   return (
     <View style={containerStyle}>
       <RangeSelector />

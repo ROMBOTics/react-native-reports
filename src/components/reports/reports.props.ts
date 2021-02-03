@@ -1,5 +1,5 @@
 import type { ViewStyle } from 'react-native';
-import { ReportCardProps } from '../report-card/report-card.props'
+import type { ReportCardProps } from '../report-card/report-card.props';
 
 export interface ReportsProps extends ReportCardProps {
   /**

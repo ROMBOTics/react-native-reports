@@ -29,21 +29,21 @@ const dynamicStyles = new DynamicStyleSheet({
     textAlign: 'center',
   },
   activityIndicatorContainer: {
-    padding: spacing.medium
+    padding: spacing.medium,
   },
   svgOverlay: {
-    opacity: 0.4
+    opacity: 0.4,
   },
   emptyReportOverlayTextContainer: {
     ...StyleSheet.absoluteFillObject,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   emptyReportOverlayText: {
     fontSize: 15,
     color: color.labelSecondary,
     textAlign: 'center',
-    fontWeight: '600'
-  }
+    fontWeight: '600',
+  },
 });
 
 /**
@@ -63,7 +63,7 @@ export function ReportCard(props: ReportCardProps) {
     showTitle,
     title,
     emptyReportOverlayText,
-    refresh,
+    refresh = false,
     style: styleOverride,
   } = props;
   const styles = useDynamicValue(dynamicStyles);
@@ -76,9 +76,8 @@ export function ReportCard(props: ReportCardProps) {
   const [shouldRefresh, setShouldRefresh] = useState(false);
 
   useEffect(() => {
-    setShouldRefresh(refresh)
-  }, [refresh])
-  
+    setShouldRefresh(refresh);
+  }, [refresh]);
 
   const context = useContext(StateContext);
   // eslint-disable-next-line react/destructuring-assignment
@@ -126,13 +125,12 @@ export function ReportCard(props: ReportCardProps) {
       .then((response) => {
         // handle success
         const { svgString, meta } = response.data;
-        console.log({meta})
-        const { style, data } = meta;
+        const { style, data: dataMeta } = meta;
         const { height: chartHeight } = style;
-        const {isEmpty: isDataEmpty} = data
+        const { isEmpty: isDataEmpty } = dataMeta;
         setData(svgString);
         setHeight(chartHeight);
-        setIsEmpty(isDataEmpty)
+        setIsEmpty(isDataEmpty);
         // updateReport(response.data)
       })
       .catch((error) => {
@@ -143,7 +141,7 @@ export function ReportCard(props: ReportCardProps) {
       .then(() => {
         // always executed
         setIsFetching(false);
-        setShouldRefresh(false)
+        setShouldRefresh(false);
       });
   }, [
     patientId,
@@ -155,7 +153,7 @@ export function ReportCard(props: ReportCardProps) {
     width,
     version,
     authorizationToken,
-    shouldRefresh
+    shouldRefresh,
   ]);
 
   // const data = context.state.reports[type]
@@ -163,22 +161,29 @@ export function ReportCard(props: ReportCardProps) {
 
   const renderGraph = () => {
     if (!formatedSvg) {
-      return null
+      return null;
     }
 
-    const showOverlay = isEmpty && emptyReportOverlayText
+    const showOverlay = isEmpty && emptyReportOverlayText;
 
     return (
       <View>
-        <SvgCss style={showOverlay && styles.svgOverlay} xml={formatedSvg} width="100%" height={height} />
+        <SvgCss
+          style={showOverlay ? styles.svgOverlay : null}
+          xml={formatedSvg}
+          width="100%"
+          height={height}
+        />
         {showOverlay && (
           <View style={styles.emptyReportOverlayTextContainer}>
-            <Text style={styles.emptyReportOverlayText}>{emptyReportOverlayText}</Text>
+            <Text style={styles.emptyReportOverlayText}>
+              {emptyReportOverlayText}
+            </Text>
           </View>
         )}
       </View>
-    )
-  }
+    );
+  };
 
   return (
     <View style={containerStyle}>
@@ -189,7 +194,9 @@ export function ReportCard(props: ReportCardProps) {
           <View style={styles.activityIndicatorContainer}>
             <ActivityIndicator />
           </View>
-        ) : renderGraph()
+        ) : (
+          renderGraph()
+        )
       }
     </View>
   );
