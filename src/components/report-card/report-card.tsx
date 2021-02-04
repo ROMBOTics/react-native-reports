@@ -124,11 +124,11 @@ export function ReportCard(props: ReportCardProps) {
       .get(path, apiConfig)
       .then((response) => {
         // handle success
-        const { data, headers } = response;
-        const {"x-isempty": isDataEmpty, "x-svg-height": svgHeight} = headers
+        const { data: svgData, headers } = response;
+        const { 'x-isempty': isDataEmpty, 'x-svg-height': svgHeight } = headers;
 
-        setData(data);
-        setHeight(parseInt(svgHeight) || DEFAULT_SVG_HEIGHT);
+        setData(svgData);
+        setHeight(parseInt(svgHeight, 10) || DEFAULT_SVG_HEIGHT);
         setIsEmpty(isDataEmpty.toLowerCase() === 'true');
         // updateReport(response.data)
       })
