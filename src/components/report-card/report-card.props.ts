@@ -2,6 +2,13 @@ import type { ViewStyle } from 'react-native';
 import type { ReportTypes, Report } from './report-card.types';
 import type { Range } from '../range-selector/range-selector.types';
 
+export interface ReportCardTitleProps {
+  /**
+   * Report card title
+   */
+  text: string;
+}
+
 export interface ReportCardProps {
   /**
    * Patient id for fetching report

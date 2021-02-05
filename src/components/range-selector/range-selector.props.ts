@@ -7,3 +7,10 @@ export interface RangeButtonProps {
   isLeft?: boolean;
   isRight?: boolean;
 }
+
+export interface RangeSelectorProps {}
+
+export interface RangeSelectorWithThemeOverrideProps
+  extends RangeSelectorProps {
+  isDarkMode?: boolean;
+}

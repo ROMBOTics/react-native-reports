@@ -5,7 +5,7 @@ import type { ReportsProps } from './reports.props';
 
 import { ReportCard } from '../report-card/report-card';
 import { ReportTypes } from '../report-card/report-card.types';
-import { RangeSelector } from '../range-selector/range-selector';
+import { RangeSelectorWithThemeOverride } from '../range-selector/range-selector';
 
 import { spacing } from '../../theme';
 
@@ -27,7 +27,7 @@ export function Reports(props: ReportsProps) {
   const containerStyle = { ...styles.container, ...styleOverride } as ViewStyle;
   return (
     <View style={containerStyle}>
-      <RangeSelector />
+      <RangeSelectorWithThemeOverride isDarkMode={cardProps.isDarkMode} />
       <ReportCard
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...cardProps}

@@ -1,10 +1,18 @@
 import React, { useContext } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-import { DynamicStyleSheet, useDynamicValue } from 'react-native-dynamic';
+import {
+  DynamicStyleSheet,
+  useDynamicValue,
+  ColorSchemeProvider,
+  useDarkMode,
+} from 'react-native-dynamic';
 
 import { StateContext } from '../../context/reports-context';
 
-import type { RangeButtonProps } from './range-selector.props';
+import type {
+  RangeButtonProps,
+  RangeSelectorWithThemeOverrideProps,
+} from './range-selector.props';
 import { RangeTypes } from './range-selector.types';
 import { spacing, cornerRadius, color } from '../../theme';
 
@@ -102,5 +110,22 @@ export function RangeSelector() {
         />
       </View>
     </View>
+  );
+}
+
+export function RangeSelectorWithThemeOverride(
+  props: RangeSelectorWithThemeOverrideProps
+) {
+  const { isDarkMode: isDarkModeOverride } = props;
+  const isSystemDarkMode = useDarkMode();
+  const isDarkMode =
+    typeof isDarkModeOverride === 'boolean'
+      ? isDarkModeOverride
+      : isSystemDarkMode;
+
+  return (
+    <ColorSchemeProvider mode={isDarkMode ? 'dark' : 'light'}>
+      <RangeSelector />
+    </ColorSchemeProvider>
   );
 }

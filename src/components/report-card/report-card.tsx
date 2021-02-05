@@ -5,13 +5,22 @@ import {
   ViewStyle,
   ActivityIndicator,
   StyleSheet,
+  Platform,
 } from 'react-native';
 import { SvgCss } from 'react-native-svg';
-import { DynamicStyleSheet, useDynamicValue } from 'react-native-dynamic';
+import {
+  DynamicStyleSheet,
+  useDynamicValue,
+  ColorSchemeProvider,
+  useDarkMode,
+} from 'react-native-dynamic';
 import axios from 'axios';
 
 import { StateContext } from '../../context/reports-context';
-import type { ReportCardProps } from './report-card.props';
+import type {
+  ReportCardProps,
+  ReportCardTitleProps,
+} from './report-card.props';
 import { Ranges } from '../range-selector/range-selector.types';
 import { spacing, metrics, color } from '../../theme';
 import { reportsUrls } from '../../network';
@@ -46,10 +55,16 @@ const dynamicStyles = new DynamicStyleSheet({
   },
 });
 
+export function ReportCardTitle(props: ReportCardTitleProps) {
+  const styles = useDynamicValue(dynamicStyles);
+  const { text } = props;
+
+  return <Text style={styles.title}>{text}</Text>;
+}
+
 /**
  * report to show individual chart
  */
-// eslint-disable-next-line import/prefer-default-export
 export function ReportCard(props: ReportCardProps) {
   const {
     patientId,
@@ -58,7 +73,7 @@ export function ReportCard(props: ReportCardProps) {
     version = 'v1',
     type,
     range: rangeOverride,
-    isDarkMode,
+    isDarkMode: isDarkModeOverride,
     width = metrics.deviceWidth,
     showTitle,
     title,
@@ -67,6 +82,11 @@ export function ReportCard(props: ReportCardProps) {
     style: styleOverride,
   } = props;
   const styles = useDynamicValue(dynamicStyles);
+  const isSystemDarkMode = useDarkMode();
+  const isDarkMode =
+    typeof isDarkModeOverride === 'boolean'
+      ? isDarkModeOverride
+      : isSystemDarkMode;
   const containerStyle = { ...styles.container, ...styleOverride } as ViewStyle;
 
   const [isFetching, setIsFetching] = useState(false);
@@ -156,7 +176,14 @@ export function ReportCard(props: ReportCardProps) {
   ]);
 
   // const data = context.state.reports[type]
-  const formatedSvg = (data || '').replace(/sans-serif/g, '');
+  let formatedSvg = (data || '').replace(/sans-serif/g, '');
+  // react-native-svg on android doesnt handle "currentColor", provide label color instead
+  if (Platform.OS === 'android') {
+    formatedSvg = formatedSvg.replace(
+      /currentColor/g,
+      isDarkMode ? '#FFFFFFFF' : '#000000FF'
+    );
+  }
 
   const renderGraph = () => {
     if (!formatedSvg) {
@@ -185,18 +212,17 @@ export function ReportCard(props: ReportCardProps) {
   };
 
   return (
-    <View style={containerStyle}>
-      {showTitle && <Text style={styles.title}>{title}</Text>}
-      {
-        // eslint-disable-next-line no-nested-ternary
-        isFetching ? (
+    <ColorSchemeProvider mode={isDarkMode ? 'dark' : 'light'}>
+      <View style={containerStyle}>
+        {showTitle && <ReportCardTitle text={title} />}
+        {isFetching ? (
           <View style={styles.activityIndicatorContainer}>
             <ActivityIndicator />
           </View>
         ) : (
           renderGraph()
-        )
-      }
-    </View>
+        )}
+      </View>
+    </ColorSchemeProvider>
   );
 }
