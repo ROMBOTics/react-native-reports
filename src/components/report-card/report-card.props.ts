@@ -1,5 +1,5 @@
 import type { ViewStyle } from 'react-native';
-import type { ReportTypes, Report } from './report-card.types';
+import type { ReportTypes, CAMReportTypes, Report } from './report-card.types';
 import type { Range } from '../range-selector/range-selector.types';
 
 export interface ReportCardTitleProps {
@@ -23,7 +23,7 @@ export interface ReportCardProps {
   /**
    * Report card type
    */
-  type: ReportTypes;
+  type: ReportTypes | CAMReportTypes;
 
   /**
    * Report range

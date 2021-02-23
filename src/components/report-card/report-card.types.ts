@@ -25,6 +25,15 @@ export const CompletionPercentageProps = {
   type: ReportTypes.programCompletionPercentage,
 };
 
+export enum CAMReportTypes {
+  activityPercentage = 'cam/activity/percentage',
+}
+
+export const CAMActivityPercentageProps = {
+  title: 'Activity Percentage',
+  type: CAMReportTypes.activityPercentage,
+};
+
 export interface Report {
   isFetching: boolean;
   reportType: ReportTypes;

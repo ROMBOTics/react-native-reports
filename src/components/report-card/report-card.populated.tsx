@@ -7,6 +7,7 @@ import {
   SkippedExericsesProps,
   PainAverageProps,
   CompletionPercentageProps,
+  CAMActivityPercentageProps,
 } from './report-card.types';
 
 export function PainPercentageCard(props: ReportCardProps) {
@@ -23,4 +24,8 @@ export function PainAverageCard(props: ReportCardProps) {
 
 export function CompletionPercentageCard(props: ReportCardProps) {
   return <ReportCard {...props} {...CompletionPercentageProps} />;
+}
+
+export function CAMActivityPercentageCard(props: ReportCardProps) {
+  return <ReportCard {...props} {...CAMActivityPercentageProps} />;
 }
