@@ -26,7 +26,7 @@ export const CompletionPercentageProps = {
 };
 
 export enum CAMReportTypes {
-  activityPercentage = 'cam/activity/percentage',
+  activityPercentage = 'patient/cam/activity/percentage',
 }
 
 export const CAMActivityPercentageProps = {
