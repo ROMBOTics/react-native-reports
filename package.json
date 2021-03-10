@@ -1,6 +1,6 @@
 {
   "name": "@rombotics/react-native-reports",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "A react native component package for rendering reports",
   "main": "lib/commonjs/index.js",
   "scripts": {
