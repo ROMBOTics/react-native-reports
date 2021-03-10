@@ -41,6 +41,16 @@ export interface ReportCardProps {
   envId: string;
 
   /**
+   * Timezone to display reports in
+   */
+  timezone: string;
+
+  /**
+   * Locale to display reports in
+   */
+  locale: string;
+
+  /**
    * is in dark mode
    */
   isDarkMode: boolean;

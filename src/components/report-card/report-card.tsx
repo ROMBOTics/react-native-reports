@@ -16,6 +16,7 @@ import {
 } from 'react-native-dynamic';
 import axios from 'axios';
 
+import moment from 'moment-timezone';
 import { StateContext } from '../../context/reports-context';
 import type {
   ReportCardProps,
@@ -70,6 +71,8 @@ export function ReportCard(props: ReportCardProps) {
     patientId,
     authorizationToken,
     envId,
+    timezone = moment.tz.guess(),
+    locale = 'en-us',
     version = 'v1',
     type,
     range: rangeOverride,
@@ -134,6 +137,12 @@ export function ReportCard(props: ReportCardProps) {
     if (width) {
       path = `${path}&width=${width}`;
     }
+    if (timezone) {
+      path = `${path}&timezone=${timezone}`;
+    }
+    if (locale) {
+      path = `${path}&locale=${locale}`;
+    }
     path = `${path}&font_scale=${1.2}`;
 
     // set loading to true
@@ -168,6 +177,8 @@ export function ReportCard(props: ReportCardProps) {
     range,
     type,
     envId,
+    locale,
+    timezone,
     isDarkMode,
     width,
     version,

@@ -36,6 +36,7 @@
     "husky": "^4.3.8",
     "metro-react-native-babel-preset": "^0.64.0",
     "moment": "^2.29.1",
+    "moment-timezone": "^0.5.33",
     "prettier": "^2.2.1",
     "react": "16.13.1",
     "react-native": "0.63.2",
@@ -49,6 +50,7 @@
   "peerDependencies": {
     "axios": "*",
     "moment": "*",
+    "moment-timezone": "*",
     "react": "*",
     "react-native": "*",
     "react-native-dynamic": "*",
