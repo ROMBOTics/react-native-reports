@@ -27,11 +27,41 @@ export const CompletionPercentageProps = {
 
 export enum CAMReportTypes {
   activityPercentage = 'patient/cam/activity/percentage',
+  heartrateAverage = 'patient/cam/heartrate/average',
+  motionAverage = 'patient/cam/motion/average',
+  energyPerMinuteAverage = 'patient/cam/energy-per-minute/average',
+  metsAverage = 'patient/cam/mets/average',
+  stepsTotal = 'patient/cam/steps/total',
 }
 
 export const CAMActivityPercentageProps = {
   title: 'Activity Percentage',
   type: CAMReportTypes.activityPercentage,
+};
+
+export const CAMHeartrateAverageProps = {
+  title: 'Heartrate',
+  type: CAMReportTypes.heartrateAverage,
+};
+
+export const CAMMotionAverageProps = {
+  title: 'Motion',
+  type: CAMReportTypes.motionAverage,
+};
+
+export const CAMEnergyPerMinuteAverageProps = {
+  title: 'Energy Per Minute',
+  type: CAMReportTypes.energyPerMinuteAverage,
+};
+
+export const CAMMetsAverageProps = {
+  title: 'METs',
+  type: CAMReportTypes.metsAverage,
+};
+
+export const CAMStepsTotalProps = {
+  title: 'Steps',
+  type: CAMReportTypes.stepsTotal,
 };
 
 export interface Report {

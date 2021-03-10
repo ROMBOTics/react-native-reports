@@ -8,6 +8,11 @@ import {
   PainAverageProps,
   CompletionPercentageProps,
   CAMActivityPercentageProps,
+  CAMStepsTotalProps,
+  CAMMetsAverageProps,
+  CAMEnergyPerMinuteAverageProps,
+  CAMMotionAverageProps,
+  CAMHeartrateAverageProps,
 } from './report-card.types';
 
 export function PainPercentageCard(props: ReportCardProps) {
@@ -28,4 +33,24 @@ export function CompletionPercentageCard(props: ReportCardProps) {
 
 export function CAMActivityPercentageCard(props: ReportCardProps) {
   return <ReportCard {...props} {...CAMActivityPercentageProps} />;
+}
+
+export function CAMHeartrateAverageCard(props: ReportCardProps) {
+  return <ReportCard {...props} {...CAMHeartrateAverageProps} />;
+}
+
+export function CAMMotionAverageCard(props: ReportCardProps) {
+  return <ReportCard {...props} {...CAMMotionAverageProps} />;
+}
+
+export function CAMEnergyPerMinuteAverageCard(props: ReportCardProps) {
+  return <ReportCard {...props} {...CAMEnergyPerMinuteAverageProps} />;
+}
+
+export function CAMMetsAverageCard(props: ReportCardProps) {
+  return <ReportCard {...props} {...CAMMetsAverageProps} />;
+}
+
+export function CAMStepsTotalCard(props: ReportCardProps) {
+  return <ReportCard {...props} {...CAMStepsTotalProps} />;
 }
