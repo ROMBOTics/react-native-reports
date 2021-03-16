@@ -72,7 +72,7 @@ export function ReportCard(props: ReportCardProps) {
     authorizationToken,
     envId,
     timezone = moment.tz.guess(),
-    locale = 'en-us',
+    locale,
     version = 'v1',
     type,
     range: rangeOverride,

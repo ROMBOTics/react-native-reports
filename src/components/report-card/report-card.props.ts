@@ -48,7 +48,7 @@ export interface ReportCardProps {
   /**
    * Locale to display reports in
    */
-  locale: string;
+  locale?: string;
 
   /**
    * is in dark mode

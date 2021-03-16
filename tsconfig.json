@@ -23,6 +23,7 @@
     "skipLibCheck": true,
     "strict": true,
     "declaration": true,
+    "sourceMap": true,
     "target": "esnext"
   }
 }
