@@ -11,5 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - run: git fetch --prune
-    - run: git push --force-with-lease --prune "https://${{ secrets.CN_NORTH_1_CODECOMMIT_USER }}:${{ secrets.CN_NORTH_1_CODECOMMIT_PASSWORD }}@git-codecommit.cn-north-1.amazonaws.com.cn/v1/repos/react-native-reports.git/" +refs/remotes/origin/*:refs/heads/* +refs/tags/*:refs/tags/*
+      with:
+        fetch-depth: 0
+    - run: git push --mirror "https://${{ secrets.CN_NORTH_1_CODECOMMIT_USER }}:${{ secrets.CN_NORTH_1_CODECOMMIT_PASSWORD }}@git-codecommit.cn-north-1.amazonaws.com.cn/v1/repos/react-native-reports.git/"
