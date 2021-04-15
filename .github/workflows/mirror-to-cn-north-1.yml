@@ -5,11 +5,11 @@ name: Mirror to cn-north-1
 
 on: workflow_dispatch
 
-
+# Ref: http://blog.plataformatec.com.br/2013/05/how-to-properly-mirror-a-git-repository/
 jobs:
   mirror:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - run: git remote add mirror "https://${{ secrets.CN_NORTH_1_CODECOMMIT_USER }}:${{ secrets.CN_NORTH_1_CODECOMMIT_PASSWORD }}@git-codecommit.cn-north-1.amazonaws.com.cn/v1/repos/react-native-reports"
-    - run: git push --tags --force --prune mirror "refs/remotes/origin/*:refs/heads/*"
+    - run: git fetch --prune
+    - run: git push --prune "https://${{ secrets.CN_NORTH_1_CODECOMMIT_USER }}:${{ secrets.CN_NORTH_1_CODECOMMIT_PASSWORD }}@git-codecommit.cn-north-1.amazonaws.com.cn/v1/repos/react-native-reports.git/" +refs/remotes/origin/*:refs/heads/* +refs/tags/*:refs/tags/*
